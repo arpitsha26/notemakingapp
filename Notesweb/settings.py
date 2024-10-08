@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ez@zw(%v_b4vr_5pz1_&8&ws9dmtvch8*1f_z$#t)v8g+4g#0*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -73,14 +73,19 @@ WSGI_APPLICATION = 'Notesweb.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+'''
+import dj_database_url
 
+DATABASES= {
+    'default': dj_database_url.parse('postgresql://notedatabase_user:1lSC2jfVWbNCQZm66CEjlcb3ya7HIieZ@dpg-cs2jvgjqf0us73a9s7fg-a.oregon-postgres.render.com/notedatabase')
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
