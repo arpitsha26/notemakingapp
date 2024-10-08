@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1>Notes</h1>
+
+    <!-- Form to add a new note -->
+    <form method="post" action="{% url 'get_notes' %}" class="mb-4">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Title" required>
+        </div>
+        <div class="form-group">
+            <textarea name="content" class="form-control" placeholder="Content" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Note</button>
+    </form>
+
+    <!-- Form to delete all notes -->
+    <form method="post" action="{% url 'get_notes' %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger mb-3">Delete All Notes</button>
+    </form>
+
+    <!-- List of notes -->
+    <ul class="list-group mb-3">
+        {% for note in notes %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'get_note_by_id' note.note_id %}">{{ note.title }}</a>
+                <div>
+                    <a href="{% url 'update_note' note.note_id %}" class="btn btn-sm btn-success me-2">Edit</a>
+                    <form method="post" action="{% url 'delete_note_by_id' note.note_id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
